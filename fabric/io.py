@@ -78,6 +78,9 @@ class OutputLooper(object):
 
         start = time.time()
         while True:
+            # raises a paramiko.ssh_exception.ProxyCommandFailure if the
+            # channel is no longer open
+            self.chan.get_transport().send_ignore()
             # Handle actual read
             try:
                 bytelist = self.read_func(self.read_size)
